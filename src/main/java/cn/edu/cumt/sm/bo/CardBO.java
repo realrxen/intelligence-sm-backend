@@ -1,9 +1,7 @@
-package cn.edu.cumt.sm.vo;
+package cn.edu.cumt.sm.bo;
 
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.models.auth.In;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -20,14 +18,16 @@ import java.util.Date;
  * @since 2020-04-30
  */
 @Data
-public class CardVO implements Serializable {
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class CardBO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * card主键
      */
-
+    @TableId
     private String cardId;
 
     /**
@@ -39,7 +39,6 @@ public class CardVO implements Serializable {
      * 是否为最后一个card
      */
     private Boolean isLast;
-
 
     /**
      * 卡片图标
@@ -56,10 +55,6 @@ public class CardVO implements Serializable {
      */
     @JsonProperty("order")
     private Integer sort;
-
-
-    @JsonIgnore
-    private Integer forSort;
 
     @JsonProperty("name")
     private String cardName;

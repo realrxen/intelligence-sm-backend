@@ -88,6 +88,11 @@ public class News implements Serializable {
     private String watchTimes;
 
     /**
+     * tab表主键
+     */
+    private Integer tabId;
+
+    /**
      * 创建时间
      */
     private Date createTime;

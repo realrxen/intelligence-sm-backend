@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class NewsController {
     @Autowired
     private NewsService newsService;
-    @GetMapping("/{type}")
-    public ResultVO list(@PathVariable int type,
+    @GetMapping("/{tabId}")
+    public ResultVO list(@PathVariable String tabId,
                          @RequestParam(value = "currentNum") int currentNum,
                          @RequestParam(value = "size",required = false,defaultValue = "2") int size) {
-        return newsService.listNews(type,currentNum,size);
+        return newsService.listNews(tabId,currentNum,size);
     }
 
     @GetMapping("/")

@@ -27,7 +27,7 @@ public class CardServiceImpl extends ServiceImpl<CardMapper, Card> implements Ca
     @Override
     public List<Card> listCards() {
         QueryWrapper<Card> queryWrapper = new QueryWrapper<>();
-        queryWrapper.orderByAsc("sort");
+        queryWrapper.orderByAsc("sort").eq("status",true);
         List<Card> list = cardMapper.selectList(queryWrapper);
         return list;
     }

@@ -15,8 +15,6 @@ import java.util.List;
  */
 @Data
 public class NewsDTO {
-    private Integer id;
-    private MyPageHelper<NewsBO> newsListItem;
     private CardVO cardVO;
     private List<NewsBO> newsBOS;
 }

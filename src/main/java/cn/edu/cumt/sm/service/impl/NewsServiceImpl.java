@@ -1,15 +1,15 @@
 package cn.edu.cumt.sm.service.impl;
 
+import cn.edu.cumt.sm.bo.CardBO;
 import cn.edu.cumt.sm.bo.NewsBO;
 import cn.edu.cumt.sm.dataobject.Card;
+import cn.edu.cumt.sm.dataobject.CardTab;
 import cn.edu.cumt.sm.dataobject.News;
 import cn.edu.cumt.sm.dao.NewsMapper;
+import cn.edu.cumt.sm.dataobject.Tab;
 import cn.edu.cumt.sm.dto.NewsDTO;
 import cn.edu.cumt.sm.model.MyPageHelper;
-import cn.edu.cumt.sm.service.CardService;
-import cn.edu.cumt.sm.service.MediaTagsService;
-import cn.edu.cumt.sm.service.NewsService;
-import cn.edu.cumt.sm.service.TagService;
+import cn.edu.cumt.sm.service.*;
 import cn.edu.cumt.sm.vo.CardVO;
 import cn.edu.cumt.sm.vo.ResultVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -44,17 +44,21 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
     private TagService tagService;
     @Autowired
     private CardService cardService;
+    @Autowired
+    private CardTabService cardTabService;
+    @Autowired
+    private TabService tabService;
 
     @Override
-    public ResultVO listNews(int type,int currentNum, int size) {
+    public ResultVO listNews(String tabId,int currentNum, int size) {
         QueryWrapper<News> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("type", type).orderByDesc("create_time");
+        queryWrapper.eq("tab_id", tabId).orderByDesc("create_time");
         PageHelper.startPage(currentNum, size);
         List<News> newsList = newsMapper.selectList(queryWrapper);
         PageInfo<News> newsPageInfo = new PageInfo<>(newsList);
         MyPageHelper<NewsBO> myPageHelper = new MyPageHelper<>();
         BeanUtils.copyProperties(newsPageInfo, myPageHelper);
-        List<NewsBO> newsBOS = assembleBoList(newsList);
+        List<NewsBO> newsBOS = assembleNewsBoList(newsList);
         myPageHelper.setList(newsBOS);
         return ResultVO.success(myPageHelper);
     }
@@ -65,16 +69,23 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
         List<NewsDTO> newsDTOS = new ArrayList<>();
         for (int i = 0; i < cards.size(); i++) {
             Card card = cards.get(i);
+            CardBO cardBO = new CardBO();
+            BeanUtils.copyProperties(card, cardBO);
             NewsDTO newsDTO = new NewsDTO();
+            CardTab cardTab = cardTabService.selectByCardId(card.getCardId());
+            String tabId = cardTab.getTabId();
+            cardBO.setTabId(tabId);
+            Tab tab = tabService.selectByTabId(tabId);
+            cardBO.setCardName(tab.getTabName());
             CardVO cardVO = new CardVO();
-            BeanUtils.copyProperties(card, cardVO);
+            BeanUtils.copyProperties(cardBO, cardVO);
             cardVO.setForSort(i);
             newsDTO.setCardVO(cardVO);
             QueryWrapper<News> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("type", card.getSort()).orderByDesc("create_time");
+            queryWrapper.eq("tab_id", tab.getTabId()).orderByDesc("create_time");
             queryWrapper.last("limit 3");
             List<News> newsList = newsMapper.selectList(queryWrapper);
-            List<NewsBO> newsBOS = assembleBoList(newsList);
+            List<NewsBO> newsBOS = assembleNewsBoList(newsList);
             newsDTO.setNewsBOS(newsBOS);
             newsDTOS.add(newsDTO);
         }
@@ -87,7 +98,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
 
     }
 
-    public List<NewsBO> assembleBoList(List<News> newsList) {
+    public List<NewsBO> assembleNewsBoList(List<News> newsList) {
         return newsList.stream().map(news -> {
             NewsBO newsBO = new NewsBO();
             BeanUtils.copyProperties(news, newsBO);

@@ -42,11 +42,6 @@ public class Card implements Serializable {
     private Boolean isLast;
 
     /**
-     * 卡片名称
-     */
-    private String name;
-
-    /**
      * 卡片图标
      */
     private String icon;

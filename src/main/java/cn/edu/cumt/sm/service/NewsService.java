@@ -14,7 +14,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface NewsService extends IService<News> {
 
-    ResultVO listNews(int type,int currentNum, int size);
+    ResultVO listNews(String tabId,int currentNum, int size);
 
     ResultVO listNews2();
 
