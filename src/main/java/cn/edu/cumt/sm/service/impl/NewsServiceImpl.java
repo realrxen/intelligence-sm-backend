@@ -48,7 +48,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
     @Override
     public ResultVO listNews(int type,int currentNum, int size) {
         QueryWrapper<News> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("type", type);
+        queryWrapper.eq("type", type).orderByDesc("create_time");
         PageHelper.startPage(currentNum, size);
         List<News> newsList = newsMapper.selectList(queryWrapper);
         PageInfo<News> newsPageInfo = new PageInfo<>(newsList);
@@ -56,10 +56,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
         BeanUtils.copyProperties(newsPageInfo, myPageHelper);
         List<NewsBO> newsBOS = assembleBoList(newsList);
         myPageHelper.setList(newsBOS);
-        NewsDTO newsDTO = new NewsDTO();
-        newsDTO.setId(type);
-        newsDTO.setNewsListItem(myPageHelper);
-        return ResultVO.success(newsDTO);
+        return ResultVO.success(myPageHelper);
     }
 
     @Override
@@ -74,7 +71,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
             cardVO.setForSort(i);
             newsDTO.setCardVO(cardVO);
             QueryWrapper<News> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("type", card.getSort());
+            queryWrapper.eq("type", card.getSort()).orderByDesc("create_time");
             queryWrapper.last("limit 3");
             List<News> newsList = newsMapper.selectList(queryWrapper);
             List<NewsBO> newsBOS = assembleBoList(newsList);
