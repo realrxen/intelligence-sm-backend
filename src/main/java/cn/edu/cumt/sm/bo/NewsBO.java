@@ -30,11 +30,6 @@ public class NewsBO {
     private String title;
 
     /**
-     * 新闻类型
-     */
-    private Integer type;
-
-    /**
      * 封面图片
      */
     @JsonProperty("cover")
@@ -83,5 +78,8 @@ public class NewsBO {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm" ,timezone = "GMT+8 ")
     private Date createTime;
+
+
+    private String tabId;
 
 }

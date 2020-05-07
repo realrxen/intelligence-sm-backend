@@ -36,10 +36,6 @@ public class News implements Serializable {
      */
     private String title;
 
-    /**
-     * 新闻类型
-     */
-    private Integer type;
 
     /**
      * 封面图片
@@ -90,7 +86,7 @@ public class News implements Serializable {
     /**
      * tab表主键
      */
-    private Integer tabId;
+    private String tabId;
 
     /**
      * 创建时间

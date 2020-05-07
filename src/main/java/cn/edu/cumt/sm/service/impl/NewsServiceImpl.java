@@ -52,7 +52,9 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
     @Override
     public ResultVO listNews(String tabId,int currentNum, int size) {
         QueryWrapper<News> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("tab_id", tabId).orderByDesc("create_time");
+        queryWrapper.eq("tab_id", tabId)
+                .orderByDesc("create_time")
+                .eq("status",true);
         PageHelper.startPage(currentNum, size);
         List<News> newsList = newsMapper.selectList(queryWrapper);
         PageInfo<News> newsPageInfo = new PageInfo<>(newsList);

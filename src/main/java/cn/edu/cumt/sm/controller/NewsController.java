@@ -22,7 +22,7 @@ public class NewsController {
     @GetMapping("/{tabId}")
     public ResultVO list(@PathVariable String tabId,
                          @RequestParam(value = "currentNum") int currentNum,
-                         @RequestParam(value = "size",required = false,defaultValue = "2") int size) {
+                         @RequestParam(value = "size",required = false,defaultValue = "10") int size) {
         return newsService.listNews(tabId,currentNum,size);
     }
 
