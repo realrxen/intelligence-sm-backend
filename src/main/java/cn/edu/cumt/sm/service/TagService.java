@@ -29,4 +29,6 @@ public interface TagService {
      * @return List<TagVO>
      */
     ResultVO get();
+
+    List<TagVO> list();
 }

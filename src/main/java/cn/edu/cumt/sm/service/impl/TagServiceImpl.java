@@ -5,6 +5,7 @@ import cn.edu.cumt.sm.dao.TagMapper;
 import cn.edu.cumt.sm.service.TagService;
 import cn.edu.cumt.sm.vo.ResultVO;
 import cn.edu.cumt.sm.vo.TagVO;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  * @since 2020-05-03
  */
 @Service
-public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagService {
+public class TagServiceImpl implements TagService {
 
     @Autowired
     private TagMapper tagMapper;
@@ -35,7 +36,6 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         for (Tag tag : tags) {
             TagVO tagVO = new TagVO();
             BeanUtils.copyProperties(tag,tagVO);
-            tagVO.setIsSelected(false);
             tagVos.add(tagVO);
         }
         return tagVos;
@@ -49,5 +49,16 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
             return tagVO;
         }).collect(Collectors.toList());
         return ResultVO.success(tagVos);
+    }
+
+    @Override
+    public List<TagVO> list() {
+        QueryWrapper<Tag> tagQueryWrapper = new QueryWrapper<>();
+        tagQueryWrapper.eq("status", true);
+        return tagMapper.selectList(tagQueryWrapper).stream().map(tag -> {
+            TagVO tagVO = new TagVO();
+            BeanUtils.copyProperties(tag, tagVO);
+            return tagVO;
+        }).collect(Collectors.toList());
     }
 }

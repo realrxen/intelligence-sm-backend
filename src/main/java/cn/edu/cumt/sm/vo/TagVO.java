@@ -20,6 +20,5 @@ public class TagVO {
     private String name;
 
 
-    private Boolean isSelected;
 
 }
