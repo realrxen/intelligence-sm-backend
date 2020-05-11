@@ -1,6 +1,7 @@
 package cn.edu.cumt.sm.bo;
 
 import cn.edu.cumt.sm.dataobject.Card;
+import cn.edu.cumt.sm.vo.AttachmentVO;
 import cn.edu.cumt.sm.vo.TagVO;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -51,7 +52,10 @@ public class NewsBO {
      */
     private List<TagVO> tags;
 
-
+    /**
+     * 附件列表
+     */
+    private List<AttachmentVO> attachments;
 
     /**
      * 审核人员
@@ -61,7 +65,7 @@ public class NewsBO {
     /**
      * 编辑人员
      */
-    private String editor;
+    private String author;
 
     /**
      * 摄影人员
@@ -71,12 +75,12 @@ public class NewsBO {
     /**
      * 浏览次数
      */
-    private String watchTimes;
+    private Integer watchTimes;
 
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm" ,timezone = "GMT+8 ")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm" ,timezone = "GMT+8")
     private Date createTime;
 
 

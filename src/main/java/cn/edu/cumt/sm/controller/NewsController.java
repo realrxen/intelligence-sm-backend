@@ -1,9 +1,11 @@
 package cn.edu.cumt.sm.controller;
 
 
+
 import cn.edu.cumt.sm.service.NewsService;
 import cn.edu.cumt.sm.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/news")
+@CrossOrigin(origins = {"*"},allowCredentials = "true")
 public class NewsController {
     @Autowired
     private NewsService newsService;
@@ -29,6 +32,11 @@ public class NewsController {
     @GetMapping("/")
     public ResultVO list2() {
         return newsService.listNews2();
+    }
+
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResultVO create(@RequestBody cn.edu.cumt.sm.form.News newsForm) {
+        return newsService.create(newsForm);
     }
 
 }

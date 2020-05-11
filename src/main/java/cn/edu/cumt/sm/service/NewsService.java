@@ -18,4 +18,5 @@ public interface NewsService extends IService<News> {
 
     ResultVO listNews2();
 
+    ResultVO create(cn.edu.cumt.sm.form.News newsForm);
 }

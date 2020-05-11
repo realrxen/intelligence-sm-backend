@@ -5,6 +5,7 @@ import cn.edu.cumt.sm.service.TabService;
 import cn.edu.cumt.sm.vo.ResultVO;
 import cn.edu.cumt.sm.vo.TabVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/tabs")
+@CrossOrigin(origins = {"*"},allowCredentials = "true")
 public class TabController {
 
     @Autowired

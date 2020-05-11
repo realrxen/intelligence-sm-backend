@@ -5,6 +5,7 @@ import cn.edu.cumt.sm.service.TagService;
 import cn.edu.cumt.sm.vo.ResultVO;
 import cn.edu.cumt.sm.vo.TagVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,6 +23,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/tags")
+@CrossOrigin(origins = {"*"},allowCredentials = "true")
 public class TagController {
 
     @Autowired

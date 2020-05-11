@@ -66,7 +66,7 @@ public class News implements Serializable {
     /**
      * 编辑人员
      */
-    private String editor;
+    private String author;
 
     /**
      * 摄影人员
@@ -81,7 +81,7 @@ public class News implements Serializable {
     /**
      * 浏览次数
      */
-    private String watchTimes;
+    private Integer watchTimes;
 
     /**
      * tab表主键

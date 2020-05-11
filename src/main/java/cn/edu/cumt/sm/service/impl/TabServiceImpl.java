@@ -4,6 +4,7 @@ import cn.edu.cumt.sm.dataobject.Tab;
 import cn.edu.cumt.sm.dao.TabMapper;
 import cn.edu.cumt.sm.service.TabService;
 import cn.edu.cumt.sm.vo.TabVO;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,9 @@ public class TabServiceImpl implements TabService {
 
     @Override
     public List<TabVO> list() {
-        List<Tab> tabs = tabMapper.selectList(null);
+        QueryWrapper<Tab> wrapper = new QueryWrapper<>();
+        wrapper.eq("status", true);
+        List<Tab> tabs = tabMapper.selectList(wrapper);
         return tabs.stream().map(tab -> {
             TabVO tabVO = new TabVO();
             BeanUtils.copyProperties(tab, tabVO);
