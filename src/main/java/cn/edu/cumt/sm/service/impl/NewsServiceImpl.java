@@ -93,7 +93,7 @@ public class NewsServiceImpl extends ServiceImpl<NewsMapper, News> implements Ne
             cardVO.setForSort(i);
             newsDTO.setCardVO(cardVO);
             QueryWrapper<News> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("tab_id", tab.getTabId()).orderByDesc("create_time");
+            queryWrapper.eq("tab_id", tab.getTabId()).orderByDesc("create_time").eq("status",true);
             queryWrapper.last("limit 3");
                 List<News> newsList = newsMapper.selectList(queryWrapper);
             List<NewsBO> newsBOS = assembleNewsBoList(newsList);
